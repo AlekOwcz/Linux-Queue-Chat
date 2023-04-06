@@ -1,0 +1,45 @@
+Alekander Owczarczak, 148172, Informatyka, III semestr
+
+1. Kompilacja
+W celu skompilowania projektu należy:
+    I. Otworzyć katalog z projektem w terminalu.
+    II. Wpisać polecenie "make" (bez "").
+    III. By usunąć wliki wykonywalne należy wpisać polecenie "make clean" (bez "").
+
+2. Uruchamianie
+W celu uruchomienia projektu należy go wpierw skompilować. By uruchomić serwer należy otworzyć katalog z projektem w terminalu a następnie wpisać polecenie "./server" (bez "). By uruchomić proces klienta analogicznie wpisujemy polecenie "./client" (bez ").
+UWAGA Próba jednoczesnego uruchomianie wielu serwerów poskutkuje błędem. Uruchomienie klienta bez uruchomionego serwera również poskutkuje błędem.
+
+3. Zawartość plików
+
+[inf148172_s.c] - Plik źródłowy serwera. Składa się z procesu macierzystego i 4 procesów potomnych. Proces macierzysty zajmuje się inicjalizacją - tworzy kolejki oraz pamięć współdzieloną między procesami serwera. W pamięci współdzielonej znajdują się listy użytkowników oraz grup a także zmienne informujące procesy o aktualnym stanie działania serwera (0 - procesy mogą się kontynuować, 1 - serwer kończy działanie, procesy potomne muszą zakończyć swoje działanie). Następnie proces macierzysty wypełnia listy użytkowników i grup, będące tablicami stuktur userInfo i groupInfo, informacjami z plików users.txt i groups.txt. Po zakończeniu inicjalizacji, tworzy procesy potomne i przechodzi do oczekiwania na polecenie zakończenia serwera (wartość 1 w pamięci). Gdy je otrzyma, usuwa kolejki i pamięć współdzieloną. Pierwszy proces potomny zajmuje się przyjmowaniem ID kolejek logujących się użytkowników i zapisywaniem ich do odpowiedniego miejsca na liście użytkowników. Drugi proces potomny zajmuje się informowaniem klientów o statusie serwera (klient powinien zakończyć pracę przy utracie łączności z serwerem). Trzeci proces potomny pośredniczy w przesyłaniu wiadomomości między klientami. Odbiera on wiadomość, sprawdza jej typ i reaguje odpowiednio na polecenie przesyłając odpowiednią strukturę adresatowi oraz potwierdzenie nadawcy. Czwarty proces oczekuje na polecenie !quit. Gdy je otrzyma zmienia stan działania serwera na 1 (kończenie pracy). 
+
+[inf148172_queues.h] - Plik zawiera definicje typów struktur kolejek przesyłanych między serwerem i klientami oraz definicje typów przesyłanych wiadomości.
+
+[inf148172_commands.h] - Plik zawierający deklaracje komend klienta.
+
+[inf148172_k.c] - Plik źródłowy klienta. Składa się z Procesu macierzystego i 3 procesów potomnych. Proces macierzysty zajmuje się inicjalizacją, tworząc kolejki do komunikacji oraz pamięć współdzieloną między procesami klienta, w której przechowywany będzie stan działania klienta (0 - kontynuuj działanie, 1 - kończ pracę). Następnie tworzy procesy potomne i oczekuje aż wartość zmiennej współdzielonej przez procesy zmieni się na 1 - wówczas, usuwa on kolejki i pamięć współdzieloną. Pierwszy z procesów potomnych sprawdza połączenie z serwerem. W przypadku utraty komunikacji, próbuję połączyć się ponownie. Po kilku nie udanych próbach kończy działanie klienta. Drugi proces zajmuje się odbieraniem wiadomości tekstowych od użytkowników i grup (za pośrednictwem serwera). Ostatni z procesów potomnych wykonuje w pętli funkcję commands() nasłuchującą komend. W przypadku rozpoznania komendy, wywołuje on odpowiednią funkcję realizującą zadanie.  
+
+[inf148172_groups.c] - Plik zawierający definicje funkcji groups() wyświetlającej dostępne grupy.
+
+[inf148172_groupjoin.c] - Plik zawierający definicje funkcji groupjoin() służącej dołączeniu do grupy.
+
+[inf148172_groupleave.c] - Plik zawierający definicje funkcji groupleave() służącej odłączeniu od grupy.
+
+[inf148172_groupmessage.c] - Plik zawierający definicje funkcji usermessage() służącej wysyłaniu wiadomości do członków grupy.
+
+[inf148172_members.c] - Plik zawierający definicje funkcji members() wyświetlającej członków podanej grupy.
+
+[inf148172_online.c] - Plik zawierający definicje funkcji online() wyświetlającej użytkowników online.
+
+[inf148172_usermessage.c] - Plik zawierający definicje funkcji usermessage() służącej wysyłaniu wiadomości do użytkownika.
+
+[inf148172_login.c] - Plik zawierający definicje funkcji login() służącej logowaniu użytkownika.
+
+[inf148172_logout.c] - Plik zawierający definicje funkcji logout() wylogowującej użytkownika.
+
+[inf148172_help.c] - Plik zawierający definicje funkcji help() wyświetlającej dostępne komendy.
+
+users.txt - Plik zawierający konta użytkowników.
+
+groups.txt - Plik zawierający grupy i ich członków.
