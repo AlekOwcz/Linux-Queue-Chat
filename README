@@ -49,26 +49,31 @@ Funkcjonalność dodatkowa: priorytety wiadomości.
 
 Wykorzystywane struktury:
 
-typedef struct userInfo {       Struktura wykorzystywana przez serwer do łatwego przechowywania i dostępu do danych użytkownika. 
+typedef struct userInfo {       Struktura wykorzystywana przez serwer do łatwego przechowywania 
+                                i dostępu do danych użytkownika. 
     int usrID;                  Pole przechowujące ID użytkownika.
     char usrNAME[32];           Pole przechowujące nazwę użytkownika.
     int logged;                 Pole przechowujące status zalogowania użytkownika.
     int communication;          Pole przechowujące id kolejki do komunikacji przez serwer z użytkownikiem.
 } USER;
 
-typedef struct groupInfo {      Struktura wykorzystywania przez serwer do łatwego przechowywania i dostępu do danych o grupie. 
+typedef struct groupInfo {      Struktura wykorzystywania przez serwer do łatwego przechowywania 
+                                i dostępu do danych o grupie. 
     int groupID;                Pole przechowujące ID grupy.
     char groupNAME[32];         Pole przechowujące nazwę grupy.
-    int members[64];            Pole przechowujące tablicę 0 i 1. Indeks pola tablicy powiększony o jeden odpowiada ID użykownika. 
+    int members[64];            Pole przechowujące tablicę 0 i 1. Indeks pola tablicy powiększony 
+                                o jeden odpowiada ID użykownika. 
 } GROUP;                        Wartość 1 oznacza członkostwo użytkownika w grupie.
 
-typedef struct ServerToClient {     Struktura bufora wiadomości, służąca do przekazywania serwerowi ID prywatnej kolejki klienta do komunikacji z serwerem.
+typedef struct ServerToClient {     Struktura bufora wiadomości, służąca do przekazywania serwerowi ID 
+                                    prywatnej kolejki klienta do komunikacji z serwerem.
     long mtype;                     Pole przechowujące typ wiadomości.
     int ID;                         Pole przechowujące ID użytkownika.
     int queue;                      Pole przechowujące ID kolejki.
 } STC;
 
-typedef struct ConfirmationQueue {  Struktura bufora wiadomości, służąca do przekazywania klientowi potwierdzenia wykonania żądania.
+typedef struct ConfirmationQueue {  Struktura bufora wiadomości, służąca do przekazywania klientowi 
+                                    potwierdzenia wykonania żądania.
     long mtype;                     Pole przechowujące typ wiadomości.
     int confirmation;               Pole przechowujące stan potwierdzenia 1 - potwierdzono, 0 - odrzucono.
 } Confirm;
@@ -78,11 +83,14 @@ typedef struct ClientServerCom {    Struktura bufora wiadomości, służąca do 
     int senderID;                   Pole przechowujące ID nadawcy.
     char senderName[32];            Pole przechowujące nazwę nadawcy.
     char receiverName[32];          Pole przechowujące nazwę adresata (jeśli wiadomość związana jest z innym użytkownikiem).
-    char groupName[32];             Pole przechowujące nazwę (lub czasem ID w formie ciągu znaków) grupy (jeśli wiadomość związana jest z grupą).
-    char message[256];              Pole przechowujące wiadomość (jeśli jakaś jest przesyłana innemu użytkownikowi/grupie).
+    char groupName[32];             Pole przechowujące nazwę (lub czasem ID w formie ciągu znaków) grupy 
+                                    (jeśli wiadomość związana jest z grupą).
+    char message[256];              Pole przechowujące wiadomość (jeśli jakaś jest przesyłana 
+                                    innemu użytkownikowi/grupie).
 } CSC;
 
-typedef struct Message {            Struktura wykorzystywana przez serwer do przekazywania wiadomości tekstowej użytkownikowi/grupie.
+typedef struct Message {            Struktura wykorzystywana przez serwer do przekazywania wiadomości 
+                                    tekstowej użytkownikowi/grupie.
     long mtyp;                      Pole przechowujące typ wiadomości.
     char senderName[32];            Pole przechowujące nazwę nadawcy.
     char groupName[32];             Pole przechowujące nazwę grupy (jeśli wiadomość jest do niej skierowana).
@@ -91,13 +99,16 @@ typedef struct Message {            Struktura wykorzystywana przez serwer do prz
 
 typedef struct Logged {             Struktura wykorzystywana do przesłania klientowi listy zalogowanych użytkowników.
     long mtype;                     Pole przechowujące typ wiadomości.
-    int loggedusers[64];            Pole przechowujące tablicę 0 i 1. Indeks tablicy powiększony o 1 odpowiada ID użytkownika. Wartość 1 oznacza zalogowanie.
+    int loggedusers[64];            Pole przechowujące tablicę 0 i 1. Indeks tablicy powiększony o 1 odpowiada 
+                                    ID użytkownika. Wartość 1 oznacza zalogowanie.
 } LGD;
 
 typedef struct GroupMembers {       Struktura wykorzystywana do przesłania klientowi listy członków grupy.
     long mtype;                     Pole przechowujące typ wiadomości.
-    int groupmembers[64];           Pole przechowujące tablicę 0 i 1. Indeks tablicy powiększony o 1 odpowiada ID użytkownika. Wartość 1 oznacza członkostwo w grupie.
-    int conf;                       Pole przechowujące stan odnalezienia grupy. 1 - odnaleziono grupę, 0 - nie znaleziono podanej grupy. 
+    int groupmembers[64];           Pole przechowujące tablicę 0 i 1. Indeks tablicy powiększony o 1 odpowiada 
+                                    ID użytkownika. Wartość 1 oznacza członkostwo w grupie.
+    int conf;                       Pole przechowujące stan odnalezienia grupy. 1 - odnaleziono grupę, 0 - nie 
+                                    znaleziono podanej grupy. 
 } GRP;
 
 Kolejki komunikatów:
