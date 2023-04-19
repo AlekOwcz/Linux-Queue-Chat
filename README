@@ -82,7 +82,8 @@ typedef struct ClientServerCom {    Struktura bufora wiadomości, służąca do 
     long mtype;                     Pole przechowujące typ wiadomości.
     int senderID;                   Pole przechowujące ID nadawcy.
     char senderName[32];            Pole przechowujące nazwę nadawcy.
-    char receiverName[32];          Pole przechowujące nazwę adresata (jeśli wiadomość związana jest z innym użytkownikiem).
+    char receiverName[32];          Pole przechowujące nazwę adresata (jeśli wiadomość związana jest 
+                                    z innym użytkownikiem).
     char groupName[32];             Pole przechowujące nazwę (lub czasem ID w formie ciągu znaków) grupy 
                                     (jeśli wiadomość związana jest z grupą).
     char message[256];              Pole przechowujące wiadomość (jeśli jakaś jest przesyłana 
